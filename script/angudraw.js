@@ -4,14 +4,18 @@
         .controller("Main.Controller", function(){
             
             var self = this;
-            
+
             //  Publically available functions
-            self.DrawObjectOnCanvas = _drawObjectOnCanvas;
-            self.AddNewRectangle = _addNewRectangle;
-            self.AddNewCircle = _addNewCircle;
+            this.DrawObjectOnCanvas = _drawObjectOnCanvas;
+            this.AddNewRectangle = _addNewRectangle;
+            this.AddNewCircle = _addNewCircle;
+            this.SaveItems = _saveItems;
+            this.ClearAllItems = _clearAllItems;
+            this.ReloadSavedItems = _reloadSavedItems;
             
             // Let's make a reference to our canvas to refer to in this controller
-            self.canvas = new fabric.Canvas('myCanvas');    
+            self.canvas = new fabric.Canvas('myCanvas'); 
+            self.ItemsOnCanvas = [];   
             
             //  And also set some properties that we can use locally    
             self.DropX = 1;
@@ -25,6 +29,21 @@
                 console.log('current selected colour:', colour)
                 self.CurrentSelectedColour = colour;
             };
+            
+            function _saveItems () {
+                var objs = this.canvas.getObjects();              
+                self.ItemsOnCanvas = JSON.parse(JSON.stringify(objs))        
+            }
+            
+            function _reloadSavedItems () {
+               self.ItemsOnCanvas.map(function(o) {
+                    //  TO DO ! Each item we can redraw onto the canvas here :)
+               });
+            }
+            
+            function _clearAllItems () {
+                this.canvas.clear();
+            }
             
             //  Mange adding to the canvas and the drop point, primitive but it works for this test!
             function _drawObjectOnCanvas (drawnObject) {              

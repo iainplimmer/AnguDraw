@@ -5,7 +5,7 @@
         <script src="node_modules/angular/angular.min.js"></script>
         <script src="script/vendor/fabric.min.js"></script>
         <script src="script/angudraw.js"></script>
-        
+        <link src="styles.css" />
     </head>    
     <body ng-app="AnguDraw">
         <div ng-controller="Main.Controller as ctrl">
@@ -18,11 +18,15 @@
         <button ng-click="ctrl.AddNewRectangle()">Add a Rectangle</button>
         <button ng-click="ctrl.AddNewCircle()">Add a Circle</button>
         
-        <div ng-click="ctrl.SetColour('blue')">Blue</div>
-        <div ng-click="ctrl.SetColour('red')">Red</div>
-        <div ng-click="ctrl.SetColour('green')">Green</div>
+        <div class="palleteBox" style="background-color: blue;" ng-click="ctrl.SetColour('blue')"> &nbsp; </div>
+        <div class="paletteBox" style="background-color: red;" ng-click="ctrl.SetColour('red')"> &nbsp; </div>
+        <div class="paletteBox" style="background-color: green;" ng-click="ctrl.SetColour('green')"> &nbsp; </div>
         
-        <div style="background-color: {{ctrl.CurrentSelectedColour}}"> &nbsp; </div>
+        Current colour: <div style="width: 30px; height: 30px; background-color: {{ctrl.CurrentSelectedColour}}"> &nbsp; </div>
+        
+        <button ng-click="ctrl.SaveItems()">Save!</button>
+        <button ng-click="ctrl.ClearAllItems()">Clear!</button>
+        <button ng-click="ctrl.ReloadSavedItems()">Reload!</button>
         
         </div>
         

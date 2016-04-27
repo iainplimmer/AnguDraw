@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+    <head>
+        <title>AnguDraw 1.0</title>
+        <script src="node_modules/angular/angular.min.js"></script>
+        <script src="script/vendor/fabric.min.js"></script>
+        <script src="script/angudraw.js"></script>
+        
+    </head>    
+    <body ng-app="AnguDraw">
+        <div ng-controller="Main.Controller as ctrl">
+        <canvas 
+            id="myCanvas" 
+            width="500" 
+            height="500" 
+            style="border:1px solid #000000;">
+        </canvas>
+        <button ng-click="ctrl.AddNewRectangle()">Add a Rectangle</button>
+        <button ng-click="ctrl.AddNewCircle()">Add a Circle</button>
+        
+        <div ng-click="ctrl.SetColour('blue')">Blue</div>
+        <div ng-click="ctrl.SetColour('red')">Red</div>
+        <div ng-click="ctrl.SetColour('green')">Green</div>
+        
+        <div style="background-color: {{ctrl.CurrentSelectedColour}}"> &nbsp; </div>
+        
+        </div>
+        
+    </body>
+</html>

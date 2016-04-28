@@ -12,6 +12,7 @@
             this.ClearAllItems = _clearAllItems;
             this.ReloadSavedItems = _reloadSavedItems;
             this.ToggleDrawingMode = _toggleFreeDrawing;
+            this.ColourPalette = ['red','black','blue','green','orange','white','purple'];
             
             // Let's make a reference to our canvas to refer to in this controller and set some default values
             self.canvas = new fabric.Canvas('myCanvas'); 
@@ -46,8 +47,6 @@
                self.canvas.clear();
                self.canvas.isDrawingMode = true;
                self.ItemsOnCanvas.map(function(o) {
-                    //  TO DO ! Each item we can redraw onto the canvas here :)
-                    console.log(o);
                     if (o.type == 'rect') {
                         _addNewRectangle(o.left, o.top, o.fill, o.width, o.height);
                     }

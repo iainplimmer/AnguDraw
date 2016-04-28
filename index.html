@@ -17,10 +17,8 @@
         </canvas>
         <button ng-click="ctrl.AddNewRectangle()">Add a Rectangle</button>
         <button ng-click="ctrl.AddNewCircle()">Add a Circle</button>
-        
-        <div class="palleteBox" style="background-color: blue;" ng-click="ctrl.SetColour('blue')"> &nbsp; </div>
-        <div class="paletteBox" style="background-color: red;" ng-click="ctrl.SetColour('red')"> &nbsp; </div>
-        <div class="paletteBox" style="background-color: green;" ng-click="ctrl.SetColour('green')"> &nbsp; </div>
+
+        <div ng-repeat="colour in ctrl.ColourPalette" class="palleteBox" style="width: 20px; background-color: {{colour}};" ng-click="ctrl.SetColour(colour)"> &nbsp; </div>
         
         Current colour: <div style="width: 30px; height: 30px; background-color: {{ctrl.CurrentSelectedColour}}"> &nbsp; </div>
         

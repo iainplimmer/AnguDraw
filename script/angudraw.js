@@ -36,8 +36,17 @@
             }
             
             function _reloadSavedItems () {
+               this.canvas.clear();
                self.ItemsOnCanvas.map(function(o) {
                     //  TO DO ! Each item we can redraw onto the canvas here :)
+                    console.log(o);
+                    if (o.type == 'rect'){
+                        _addNewRectangle(o.left, o.top, o.fill, o.width, o.height);
+                    }
+                    else if (o.type == 'circle'){
+                        _addNewCircle(o.radius, o.fill, o.left, o.top);
+                    }
+                    
                });
             }
             
@@ -59,29 +68,33 @@
             };
             
             //  Function that allows a new rectangle to be added to the canvas
-            function _addNewRectangle () {
+            function _addNewRectangle (left, top, fill, width, height) {
                 var rect = new fabric.Rect({
-                    left: self.DropX,
-                    top: self.DropY,
-                    fill: self.CurrentSelectedColour,
-                    width: 50,
-                    height: 50,
-                    lockScalingX: self,
-                    lockScalingY: self,
-                    lockRotation: self
+                    left: (left ? left : self.DropX),
+                    top: (top ? top : self.DropY),
+                    fill: (fill ? fill : self.CurrentSelectedColour),
+                    width: (width ? width : 50),
+                    height: (height ? height : 50),
+                    lockScalingX: true,
+                    lockScalingY: true,
+                    lockRotation: true
                 });
-                self.DrawObjectOnCanvas(rect);
-                
+                console.log(rect);
+                self.DrawObjectOnCanvas(rect);             
             };
             
             //  Function that allows a new circle to be drawn to the canvas
-            function _addNewCircle () {
+            function _addNewCircle (radius, fill, left, top) {
                 var circle = new fabric.Circle({
-                    radius: 25,
-                    fill: self.CurrentSelectedColour,
-                    left: self.DropX,
-                    top: self.DropY
+                    radius: (radius ? radius : 25),
+                    fill: (fill ? fill : self.CurrentSelectedColour),
+                    left: (left ? left : self.DropX),
+                    top: (top ? top : self.DropY),
+                    lockScalingX: true,
+                    lockScalingY: true,
+                    lockRotation: true
                 });
+                
                 self.DrawObjectOnCanvas(circle);
 
             };

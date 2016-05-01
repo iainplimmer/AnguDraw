@@ -5,49 +5,95 @@
         <script src="node_modules/angular/angular.min.js"></script>
         <script src="script/vendor/fabric.min.js"></script>
         <script>
-            var VanillaDraw = (function(){    
+            var VanillaDraw = (function(){   
+                 
+                //  Setup some default values that we can use in the module
+                var self = this.
+                self.canvas = {};           
+                self.DropDefault_X = 1;
+                self.DropDefault_Y = 1;   
+                self.CurrentSelectedColour = 'red';
                 
-                //  First, let's make a reference to self for use later and initialise the canvas context  
-                var self = this;    
-        
-                document.addEventListener("DOMContentLoaded", function(event) { 
-                    var canvasEl = document.getElementById('myCanvas');
-                    self.ctx = canvasEl.getContext('2d');                            
-                    self.ctx.freeDrawingBrush = [];
-                    self.ctx.isDrawingMode = true;
-                    self.ctx.freeDrawingColor = 'red';
-                    self.ctx.freeDrawingLineWidth = 4;
+                //  When the document has loaded, let's new up our canvas object
+                document.addEventListener("DOMContentLoaded", function(event) {                
+                    self.canvas = new fabric.Canvas('Canvas');   
+                    self.canvas.isDrawingMode = true;                
                 });
                 
-                function _makeRedSquare (){
-                    self.ctx.fillStyle = 'red';
-                    self.ctx.fillRect(100, 100, 20, 20);                 
+                //  Function that is used to create a square
+                function MakeSquare(left,top,fill,width,height) {
+                     var rect = new fabric.Rect({
+                        left: (left ? left : self.DropDefault_X),
+                        top: (top ? top : self.DropDefault_Y),
+                        fill: (fill ? fill : self.CurrentSelectedColour),
+                        width: (width ? width : 50),
+                        height: (height ? height : 50),
+                        lockScalingX: true,
+                        lockScalingY: true,
+                        lockRotation: true
+                    });
+                    AddShapeToCanvas(rect);
                 };
                 
-                function _toggleFreeDrawing () {             
-                    self.ctx.isDrawingMode = !self.canvas.isDrawingMode;
+                //  Function that is used to create a circle
+                function MakeCircle (radius, fill, left, top) {
+                var circle = new fabric.Circle({
+                        radius: (radius ? radius : 25),
+                        fill: (fill ? fill : self.CurrentSelectedColour),
+                        left: (left ? left : self.DropDefault_X),
+                        top: (top ? top : self.DropDefault_Y),
+                        lockScalingX: true,
+                        lockScalingY: true,
+                        lockRotation: true
+                    });                
+                    AddShapeToCanvas(circle);
+                };
+                
+                //  Adds any shape to the canvas
+                function AddShapeToCanvas(shape){
+                    self.canvas.add(shape);
+                    self.DropDefault_X +=10;
+                    self.DropDefault_Y +=10;   
+                    self.canvas.isDrawingMode = false;      
+                };
+                
+                //  Turn on and off the drawing mode
+                function ToggleDraw(){
+                    self.canvas.isDrawingMode = !self.canvas.isDrawingMode;
+                };
+                
+                //  Clear the canvas
+                function ClearCanvas () {
+                    self.canvas.clear();
                 }
                 
+                //  Revealing module pattern reveals the functions that are available on the module
                 return {
-                    MakeRedSquare: _makeRedSquare
-                    
-                }
-                
+                    MakeSquare:MakeSquare,
+                    MakeCircle:MakeCircle,
+                    ToggleDraw:ToggleDraw,
+                    ClearCanvas:ClearCanvas
+                }             
             })();
+            
+            
         </script>
         <link src="styles.css" />
     </head>    
     <body>
         <div>
         <canvas 
-            id="myCanvas" 
+            id="Canvas" 
             width="500" 
             height="500" 
             style="border:1px solid #000000;">
         </canvas>  
         
-        <button onclick='VanillaDraw.MakeRedSquare()'>Make it</button>
-          
+        <button onclick='VanillaDraw.MakeSquare()'>Make as square</button>
+        <button onclick='VanillaDraw.MakeCircle()'>Make as circle</button>
+        <button onclick='VanillaDraw.ToggleDraw()'>Toggle draw</button>
+        <button onclick='VanillaDraw.ClearCanvas()'>Clear canvas</button>     
+        
         </div>       
     </body>
 </html>

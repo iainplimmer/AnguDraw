@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+    <head>
+        <title>AnguDraw 1.0</title>
+        <script src="node_modules/angular/angular.min.js"></script>
+        <script src="script/vendor/fabric.min.js"></script>
+        <script>
+            var VanillaDraw = (function(){    
+                
+                //  First, let's make a reference to self for use later and initialise the canvas context  
+                var self = this;    
+        
+                document.addEventListener("DOMContentLoaded", function(event) { 
+                    var canvasEl = document.getElementById('myCanvas');
+                    self.ctx = canvasEl.getContext('2d');                            
+                    self.ctx.freeDrawingBrush = [];
+                    self.ctx.isDrawingMode = true;
+                    self.ctx.freeDrawingColor = 'red';
+                    self.ctx.freeDrawingLineWidth = 4;
+                });
+                
+                function _makeRedSquare (){
+                    self.ctx.fillStyle = 'red';
+                    self.ctx.fillRect(100, 100, 20, 20);                 
+                };
+                
+                function _toggleFreeDrawing () {             
+                    self.ctx.isDrawingMode = !self.canvas.isDrawingMode;
+                }
+                
+                return {
+                    MakeRedSquare: _makeRedSquare
+                    
+                }
+                
+            })();
+        </script>
+        <link src="styles.css" />
+    </head>    
+    <body>
+        <div>
+        <canvas 
+            id="myCanvas" 
+            width="500" 
+            height="500" 
+            style="border:1px solid #000000;">
+        </canvas>  
+        
+        <button onclick='VanillaDraw.MakeRedSquare()'>Make it</button>
+          
+        </div>       
+    </body>
+</html>
